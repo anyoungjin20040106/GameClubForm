@@ -101,6 +101,6 @@ def admin(request: Request,pw:str=Form(...)):
     df['학과']=df['학번'].apply(lambda x:dept[int(x%100000/1000)])
     df=df[['학과']+'학번	학년	성명	연락처	비고'.split()]
     df.reset_index(inplace=True)
-    df.rename(columns={'index':'연변'},inplace=True)
-    df['연변']=df['연변'].apply(lambda x:x+1)
+    df.rename(columns={'index':'연번'},inplace=True)
+    df['연번']=df['연번'].apply(lambda x:x+1)
     return templates.TemplateResponse('member.html',{'request':request,'table':df.to_html(index=False).replace("th","td").replace('class="dataframe"',"align='center'").replace('NaN',"")}) if pw==os.getenv("pw") else templates.TemplateResponse('warning.html',{'request':request,'msg':'암호를 틀렸습니다'})
