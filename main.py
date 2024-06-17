@@ -21,6 +21,9 @@ def index():
 @app.get("/insertform")
 def insertform():
     return FileResponse('insert.html')
+@app.get("/insert")
+def getinsert(request: Request):
+    return templates.TemplateResponse('warning.html',{'request':request,'msg':'정보를 입력해주세요'})
 @app.post("/insert")
 async def insert(request: Request,stnum:str=Form(...),name:str=Form(...),grade:int=Form(...),ph:str=Form(...),notes:str=Form(None)):
     form = {'mode': 'insert', 'stnum': stnum, "name": name, "grade": grade, "ph": ph, "notes": notes}
@@ -36,14 +39,20 @@ async def insert(request: Request,stnum:str=Form(...),name:str=Form(...),grade:i
             response.raise_for_status()
             msg = response.text
             msg = html.unescape(msg)
+            path="success.html"
     except httpx.RequestError as e:
         msg = f'Google Sheets에 데이터 추가 중 오류 발생: {e}'
+        path="warning.html"
     except httpx.HTTPStatusError as e:
         msg = f'HTTP 오류 발생: {e.response.status_code} {html.unescape(e.response.text)}'
-    return templates.TemplateResponse('success.html', {'request': request, 'msg': msg})
+        path="warning.html"
+    return templates.TemplateResponse(path, {'request': request, 'msg': msg})
 @app.get("/deleteform")
 def delete():
     return FileResponse('delete.html')
+@app.get("/delete")
+def getinsert(request: Request):
+    return templates.TemplateResponse('warning.html',{'request':request,'msg':'정보를 입력해주세요'})
 @app.post("/delete")
 async def delete(request: Request,stnum:str=Form(...),ph:str=Form(...)):
     df=pd.read_excel(sheet)
@@ -57,11 +66,14 @@ async def delete(request: Request,stnum:str=Form(...),ph:str=Form(...)):
             response.raise_for_status()
             msg = response.text
             msg = html.unescape(msg)
+            path="success.html"
     except httpx.RequestError as e:
         msg = f'Google Sheets에 데이터 추가 중 오류 발생: {e}'
+        path="warning.html"
     except httpx.HTTPStatusError as e:
         msg = f'HTTP 오류 발생: {e.response.status_code} {html.unescape(e.response.text)}'
-    return templates.TemplateResponse('success.html', {'request': request, 'msg': msg})
+        path="warning.html"
+    return templates.TemplateResponse(path, {'request': request, 'msg': msg})
 @app.get("/updateform")
 def update():
     return FileResponse('update.html')
@@ -74,23 +86,33 @@ async def updateinput(request: Request,stnum:str=Form(...)):
         return templates.TemplateResponse('warning.html',{'request':request,'msg':'해당 학번이 존재하지 않습니다'})
     df.set_index('학번',inplace=True)
     return templates.TemplateResponse('updateform.html',{'request':request,'stnum':stnum,'grade':df['학년'][stnum],'ph':df['연락처'][stnum],'name':df['성명'][stnum],'notes':df['비고'][stnum] })
+@app.get("/update")
+def getinsert(request: Request):
+    return templates.TemplateResponse('warning.html',{'request':request,'msg':'정보를 입력해주세요'})
 @app.post("/update")
 async def update(request: Request,stnum:str=Form(...),name:str=Form(...),grade:int=Form(...),ph:str=Form(...),notes:str=Form(None)):
     form = {'mode': 'update', 'stnum': stnum, "name": name, "grade": grade, "ph": ph, "notes": notes}
+    path=""
     try:   
         async with httpx.AsyncClient() as client:
             response = await client.post(programe, data=form, follow_redirects=True)
             response.raise_for_status()
             msg = response.text
             msg = html.unescape(msg)
+            path="success.html"
     except httpx.RequestError as e:
         msg = f'Google Sheets에 데이터 추가 중 오류 발생: {e}'
+        path="warning.html"
     except httpx.HTTPStatusError as e:
         msg = f'HTTP 오류 발생: {e.response.status_code} {html.unescape(e.response.text)}'
-    return templates.TemplateResponse('success.html',{'request':request,'msg':msg})
+        path="warning.html"
+    return templates.TemplateResponse(path,{'request':request,'msg':msg})
 @app.get("/admincheck")
 def admincheck():
     return FileResponse('admincheck.html')
+@app.get("/admin")
+def admin(request: Request):
+    return templates.TemplateResponse('warning.html',{'request':request,'msg':'암호를 입력헤주세요'})
 @app.post("/admin")
 def admin(request: Request,pw:str=Form(...)):
     df=pd.read_excel(sheet)
