@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../js/btnmanager.js"></script>
+    <title>{{name}}님의 정보</title>
+</head>
+
+<body>
+    <form action="/update" method="post">
+        <table align="center" border="1">
+            <tr>
+                <td colspan="3" align="center"><h2>{{name}}님의 정보</h2></td>
+            </tr>
+            <tr>
+                <td>학번</td>
+                <td colspan="3"><input name="stnum"  value="{{stnum}}" required readonly></td>
+            </tr>
+            <tr>
+                <td>성명</td>
+                <td><input name="name" value="{{name}}" required></td>
+            </tr>
+            <tr>
+                <td>학년</td>
+                <td><input type="radio" name="grade" value="1" {% if grade == 1 %}checked{% endif %}>1학년 <input
+                        type="radio" name="grade" value="2" {% if grade == 2 %}checked{% endif %}>2학년</td>
+            </tr>
+            <tr>
+                <td>연락처</td>
+                <td><input name="ph" value="{{ph}}" pattern="^010-\d{4}-\d{4}$" placeholder="010-0000-0000" required>
+                </td>
+            </tr>
+            <tr>
+                <td>비고</td>
+                <td><input name="notes" value="{% if notes=='nan' %}{{""}}{% else %}{{notes}}{% endif %}" required></td>
+            </tr>
+            <tr>
+                <td><button type="submit">수정하기</button></td>
+                <td><button onclick="back()" style="width: 100%; box-sizing: border-box;">취소</button></td>
+            </tr>
+        </table>
+    </form>
+</body>
+
+</html>

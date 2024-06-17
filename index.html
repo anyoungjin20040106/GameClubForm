@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>kbu게임동아리</title>
+</head>
+
+<body>
+    <form method="get" id="form" action="/insertform">
+        <table align="center" border="1">
+            <tr>
+                <td colspan="4" align="center">
+                    <h1>kbu게임동아리</h1>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">kbu게임 동아리는 빅데이터과와 영상미디어콘텐츠과의 동아리로 게임을 만들면서 자신만의 스팩을 올리는 동아리입니다</td>
+            </tr>
+            <tr>
+                <th colspan="2" style="width: 50%;">영상미디어콘텐츠과의 역할</th>
+                <th colspan="2">빅데이터과의 역할</th>
+            </tr>
+            <tr>
+                <td colspan="2" style="width: 50%;">
+                    <ul>
+                        <li>게임 기획</li>
+                        <li>게임 개발</li>
+                        <li>게임 디자인</li>
+                    </ul>
+                </td>
+                <td colspan="2">
+                    <ul>
+                        <li>게임 서버 개발</li>
+                        <li>유저 정보 관리</li>
+                        <li>게임 DB 구축</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" style="width: 66%;">
+                    <select style="width: 100%;" onchange="change(this)">
+                        <option value="/insertform">가입</option>
+                        <option value="/updateform">수정</option>
+                        <option value="/deleteform">삭제</option>
+                        <option value="/admincheck">목록조회</option>
+                    </select>
+                </td>
+                <td>
+                    <button type="submit" style="width: 100%;">실행하기</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+<script>
+    function change(select){
+        let form=document.getElementById('form');
+        form.action=select.value;
+    }
+</script>
+</html>
