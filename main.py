@@ -122,8 +122,8 @@ def admin(request: Request,pw:str=Form(...)):
     57:'영상미디어콘텐츠과'
     }
     df['학과']=df['학번'].apply(lambda x:dept[x%100000//1000])
-    df['비고'] = df.apply(lambda row: ", ".join(filter(None, [str(row['비고']).strip() if pd.notna(row['비고']) else None, 
-                                                               str(row['역할']).strip() if pd.notna(row['역할']) else None])), axis=1)
+    df['비고'] = df.apply(lambda row: ", ".join(filter(None, [str(row['역할']).strip() if pd.notna(row['역할']) else None,
+        str(row['비고']).strip() if pd.notna(row['비고']) else None])), axis=1)
     df=df[['학과']+'학번	학년	성명	연락처	비고'.split()]
     df.reset_index(inplace=True)
     df.rename(columns={'index':'연번'},inplace=True)
