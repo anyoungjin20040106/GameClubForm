@@ -90,7 +90,7 @@ async def updateinput(request: Request,stnum:str=Form(...)):
 def getinsert(request: Request):
     return templates.TemplateResponse('warning.html',{'request':request,'msg':'정보를 입력해주세요'})
 @app.post("/update")
-async def update(request: Request,stnum:str=Form(...),name:str=Form(...),grade:int=Form(...),ph:str=Form(...),notes:str=Form(None)):
+async def update(request: Request,stnum:str=Form(...),name:str=Form(...),grade:int=Form(...),ph:str=Form(...),notes:str=Form("")):
     form = {'mode': 'update', 'stnum': stnum, "name": name, "grade": grade, "ph": ph, "notes": notes}
     path=""
     try:   
