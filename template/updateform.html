@@ -34,11 +34,11 @@
             </tr>
             <tr>
                 <td>비고</td>
-                <td><input name="notes" value="{{notes}}"></td>
+                <td><input name="notes" value="외국인" type="checkbox" {% if notes=='외국인' %} checked {% endif %}>외국인</td>
             </tr>
             <tr>
                 <td><button type="submit">수정하기</button></td>
-                <td><button onclick="back()" style="width: 100%; box-sizing: border-box;">취소</button></td>
+                <td><button type="button" onclick="back()" style="width: 100%; box-sizing: border-box;">취소</button></td>
             </tr>
         </table>
     </form>
