@@ -54,11 +54,11 @@ def delete():
 def getinsert(request: Request):
     return templates.TemplateResponse('warning.html',{'request':request,'msg':'정보를 입력해주세요'})
 @app.post("/delete")
-async def delete(request: Request,stnum:str=Form(...),ph:str=Form(...)):
+async def delete(request: Request,stnum:str=Form(...)):
     df=pd.read_excel(sheet)
-    df=df[(df['학번']==int(stnum))&(df['연락처']==ph)]
+    df=df[(df['학번']==int(stnum))]
     if len(df)==0:
-        return templates.TemplateResponse('warning.html',{'request':request,'msg':'학번과 전화번호를 확인해주세요'})
+        return templates.TemplateResponse('warning.html',{'request':request,'msg':'해당 학번이 존재하지 않습니다'})
     form = {'mode': 'delete', 'stnum': stnum}
     try:   
         async with httpx.AsyncClient() as client:
@@ -82,6 +82,7 @@ async def updateinput(request: Request,stnum:str=Form(...)):
     stnum=int(stnum)
     df=pd.read_excel(sheet)
     df=df[df['학번']==stnum]
+    df.fillna("",inplace=True)
     if len(df)<1:
         return templates.TemplateResponse('warning.html',{'request':request,'msg':'해당 학번이 존재하지 않습니다'})
     df.set_index('학번',inplace=True)
