@@ -1,4 +1,9 @@
 <script>
     alert('사이트 주소를 변경했습니다.');
-    window.location.href="https://kbu23mb.onrender.com"
+    if(confirm('공식 홈페이지에 가시겠습니까?'))
+        window.location.href="https://kbu23mb.onrender.com"
+    else if(confirm('동아리 카카오톡 방에 가시겠습니까?'))
+        window.location.href="https://invite.kakao.com/tc/mCaNg4rZll"
+    else 
+        history.back()
 </script>
